@@ -63,11 +63,11 @@ to add them. I open for any contribution.
 
 These 3 messaging technologies have different approaches on building distributed systems :
 
-RabbitMQ is one of the leading implementation of the AMQP protocol (along with Apache Qpid). Therefore, it implements a broker architecture, meaning that messages are queued on a central node before being sent to clients. This approach makes RabbitMQ very easy to use and deploy, because advanced scenarios like routing, load balancing or persistent message queuing are supported in just a few lines of code. However, it also makes it less scalable and “slower” because the central node adds latency and message envelopes are quite big.
+`RabbitMQ` is one of the leading implementation of the AMQP protocol (along with Apache Qpid). Therefore, it implements a broker architecture, meaning that messages are queued on a central node before being sent to clients. This approach makes RabbitMQ very easy to use and deploy, because advanced scenarios like routing, load balancing or persistent message queuing are supported in just a few lines of code. However, it also makes it less scalable and “slower” because the central node adds latency and message envelopes are quite big.
 
-ZeroMq is a very lightweight messaging system specially designed for high throughput/low latency scenarios like the one you can find in the financial world. Zmq supports many advanced messaging scenarios but contrary to RabbitMQ, you’ll have to implement most of them yourself by combining various pieces of the framework (e.g : sockets and devices). Zmq is very flexible but you’ll have to study the 80 pages or so of the guide (which I recommend reading for anybody writing distributed system, even if you don’t use Zmq) before being able to do anything more complicated than sending messages between 2 peers.
+`ZeroMq` is a very lightweight messaging system specially designed for high throughput/low latency scenarios like the one you can find in the financial world. Zmq supports many advanced messaging scenarios but contrary to RabbitMQ, you’ll have to implement most of them yourself by combining various pieces of the framework (e.g : sockets and devices). Zmq is very flexible but you’ll have to study the 80 pages or so of the guide (which I recommend reading for anybody writing distributed system, even if you don’t use Zmq) before being able to do anything more complicated than sending messages between 2 peers.
 
-ActiveMQ is in the middle ground. Like Zmq, it can be deployed with both broker and P2P topologies. Like RabbitMQ, it’s easier to implement advanced scenarios but usually at the cost of raw performance. It’s the Swiss army knife of messaging :-).
+`ActiveMQ` is in the middle ground. Like Zmq, it can be deployed with both broker and P2P topologies. Like RabbitMQ, it’s easier to implement advanced scenarios but usually at the cost of raw performance. It’s the Swiss army knife of messaging :-).
 
 Finally, all 3 products:
 
@@ -77,59 +77,69 @@ are actively supported
 
 ## Message Queue Servers
 
-Message queue servers are available in various languages, Erlang (RabbitMQ), C (beanstalkd), Ruby (Starling or Sparrow), Scala (Kestrel, Kafka) or Java (ActiveMQ). A short overview can be found here
+Message queue servers are available in various languages, `Erlang (RabbitMQ)`, `C (beanstalkd)`, `Ruby (Starling or Sparrow)`, `Scala (Kestrel, Kafka)` or `Java (ActiveMQ)`. A short overview can be found here
 
-Sparrow
+`Sparrow`
 
 written by Alex MacCaw
 Sparrow is a lightweight queue written in Ruby that “speaks memcache”
-Starling
+
+`Starling`
 
 written by Blaine Cook at Twitter
 Starling is a Message Queue Server based on MemCached
 written in Ruby
 stores jobs in memory (message queue)
 documentation: some good tutorials, for example the railscast about starling and workling or this blog post about starling
-Kestrel
+
+`Kestrel`
 
 written by Robey Pointer
 Starling clone written in Scala (a port of Starling from Ruby to Scala)
 Queues are stored in memory, but logged on disk
-RabbitMQ
+
+`RabbitMQ`
 
 RabbitMQ is a Message Queue Server in Erlang
 stores jobs in memory (message queue)
-Apache ActiveMQ
+
+`Apache ActiveMQ`
 
 ActiveMQ is an open source message broker in Java
-Beanstalkd
+
+`Beanstalkd`
 
 written by Philotic, Inc. to improve the response time of a Facebook application
 in-memory workqueue service mostly written in C
 Docu: http://nubyonrails.com/articles/about-this-blog-beanstalk-messaging-queue
-Amazon SQS
+
+`Amazon SQS`
 
 Amazon Simple Queue Service
-Kafka
+
+`Kafka`
 
 Written at LinkedIn in Scala
 Used by LinkedIn to offload processing of all page and other views
 Defaults to using persistence, uses OS disk cache for hot data (has higher throughput then any of the above having persistence enabled)
 Supports both on-line as off-line processing
-ZMQ
+
+`ZMQ`
 
 The socket library that acts as a concurrency framework
 Faster than TCP, for clustered products and supercomputing
 Carries messages across inproc, IPC, TCP, and multicast
 Connect N-to-N via fanout, pubsub, pipeline, request-reply
 Asynch I/O for scalable multicore message-passing apps
-EagleMQ
+
+`EagleMQ`
 
 EagleMQ is an open source, high-performance and lightweight queue manager.
 Written in C
 Stores all data in memory and support persistence.
 It has its own protocol. Supports work with queues, routes and channels.
-IronMQ
+
+`IronMQ`
 
 IronMQ
 Written in Go
@@ -137,3 +147,9 @@ Fully managed queue service
 Available both as cloud version and on-premise
 
 [Thread](http://stackoverflow.com/questions/731233/activemq-or-rabbitmq-or-zeromq-or?rq=1)
+
+`Redis / Resque`
+
+Redis is a single-threaded in-memory key/value store similar to memcached. Redis has other features like pub/sub and more advanced data structures, but the key feature that makes it an ideal storage engine for a queue and a message bus is that is can perform atomic operations. Atomic operations are the kind of operations you can expect to do on in-process data (like Array.pop or Array.splice) but in way that keeps the data sane for everyone connected to the database.
+
+Resque is a background queue built on top of Redis. There seems to be other options out there these days, but we are pretty happy with Resque and associated tools/ecosystem. There is plenty of code in the resque codebase, but it all comes down to inserting json the queue, popping, and executing code with that as an input.
