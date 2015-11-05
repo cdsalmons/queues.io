@@ -136,4 +136,4 @@ Written in Go
 Fully managed queue service
 Available both as cloud version and on-premise
 
-# [Thread](http://stackoverflow.com/questions/731233/activemq-or-rabbitmq-or-zeromq-or?rq=1)
+[Thread](http://stackoverflow.com/questions/731233/activemq-or-rabbitmq-or-zeromq-or?rq=1)
